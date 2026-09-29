@@ -2,6 +2,28 @@ import { login, resendConfirmation } from '../auth.js';
 import { clearErrors, hideAlert, setFieldError, setSubmitting, showAlert } from '../components/form.js';
 import { getQueryParam, redirect, redirectIfLoggedIn, routes, safeNext } from '../router.js';
 
+/**
+ * Doğrulama sonucunu okur ve adresi temizler. Supabase doğrulamadan sonra buraya
+ * `?confirmed=1` ile yönlendirir ve adresin # kısmına oturum token'larını (başarılı) ya da
+ * `error_code` bilgisini (başarısız) ekler. Token'lar kullanılmaz; geçmişte kalmamaları için
+ * adresten silinir.
+ */
+function readConfirmationResult() {
+  const url = new URL(window.location.href);
+  const hash = new URLSearchParams(url.hash.slice(1));
+  const failed = hash.has('error') || hash.has('error_code') || url.searchParams.has('error');
+  const result = failed ? '0' : url.searchParams.get('confirmed');
+
+  if (url.hash || result !== null) {
+    for (const key of ['confirmed', 'error', 'error_code', 'error_description']) {
+      url.searchParams.delete(key);
+    }
+    url.hash = '';
+    window.history.replaceState(null, '', url.pathname + url.search);
+  }
+  return result;
+}
+
 if (!redirectIfLoggedIn()) {
   const form = document.getElementById('login-form');
   const alert = document.getElementById('login-alert');
@@ -12,7 +34,7 @@ if (!redirectIfLoggedIn()) {
   if (next) registerLink.href = `${routes.register}?next=${encodeURIComponent(next)}`;
 
   // E-postadaki doğrulama bağlantısından dönüş
-  const confirmed = getQueryParam('confirmed');
+  const confirmed = readConfirmationResult();
   if (confirmed === '1') {
     showAlert(alert, 'E-posta adresiniz doğrulandı. Artık giriş yapabilirsiniz.', 'success');
   } else if (confirmed === '0') {
