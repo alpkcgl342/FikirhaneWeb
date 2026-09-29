@@ -39,6 +39,146 @@
   border-top: 1px solid var(--color-border);
 }
 
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-top: var(--space-6);
+}
+
+.post-actions .btn[aria-pressed='true'] {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
+}
+
+.action-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+/* Yorumlar */
+.comments {
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
+.comments-title {
+  font-size: 1.5rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  resize: vertical;
+}
+
+.comment-form textarea:focus {
+  border-color: var(--color-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(249 115 22 / 20%);
+}
+
+.comment-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.comment-login {
+  color: var(--color-text-muted);
+}
+
+.comment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.comment {
+  padding-top: var(--space-4);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.comment-time {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.comment-body {
+  margin: var(--space-2) 0 0 40px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.comment-reply-button {
+  margin-left: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.comment-reply-button:hover {
+  text-decoration: underline;
+}
+
+.comment .comment-form {
+  margin: var(--space-3) 0 0 40px;
+}
+
+.comment-replies {
+  margin-left: 20px;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-border);
+}
+
+.comment-replies:empty {
+  display: none;
+}
+
+.comment-replies-flat {
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
+}
+
+@media (max-width: 480px) {
+  .comment-replies {
+    margin-left: 8px;
+    padding-left: var(--space-3);
+  }
+}
+
 .page-message {
   text-align: center;
   padding: var(--space-16) var(--space-4);

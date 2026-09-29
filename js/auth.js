@@ -4,7 +4,8 @@ import { api, tokenStore } from './api.js';
 
 const USER_KEY = 'fikirhane.user';
 
-function saveUser(user) {
+/** Oturumdaki kullanıcı bilgisini (ör. profil güncellemesinden sonra) kaydeder. */
+export function saveUser(user) {
   localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 

@@ -1,8 +1,10 @@
+import { isLoggedIn } from '../auth.js';
+import { mountComments } from '../components/comments.js';
 import { showAlert } from '../components/form.js';
 import { initHeader } from '../components/header.js';
-import { formatDate } from '../components/post-card.js';
+import { renderMeta } from '../components/post-card.js';
 import { renderMarkdown } from '../markdown.js';
-import { deletePost, editorUrl, getPost } from '../posts.js';
+import { deletePost, editorUrl, getPost, toggleBookmark, toggleLike } from '../posts.js';
 import { getQueryParam, redirect, routes } from '../router.js';
 
 const message = document.getElementById('post-message');
@@ -13,6 +15,79 @@ function badge(text, extraClass = '') {
   span.className = `badge ${extraClass}`.trim();
   span.textContent = text;
   return span;
+}
+
+function loginRedirect() {
+  const next = encodeURIComponent(window.location.pathname + window.location.search);
+  redirect(`${routes.login}?next=${next}`);
+}
+
+function setLikeState(button, liked, count) {
+  button.setAttribute('aria-pressed', String(liked));
+  button.querySelector('[data-label]').textContent = liked ? 'Beğenildi' : 'Beğen';
+  button.querySelector('[data-count]').textContent = String(count);
+}
+
+function setBookmarkState(button, bookmarked) {
+  button.setAttribute('aria-pressed', String(bookmarked));
+  button.querySelector('[data-label]').textContent = bookmarked ? 'Kaydedildi' : 'Kaydet';
+}
+
+/** Beğen/kaydet: giriş yapmamış kullanıcı giriş sayfasına yönlendirilir. */
+function initActions(post) {
+  const likeButton = document.getElementById('like-button');
+  const bookmarkButton = document.getElementById('bookmark-button');
+  const status = document.getElementById('action-status');
+
+  setLikeState(likeButton, post.likedByMe, post.likeCount);
+  setBookmarkState(bookmarkButton, post.bookmarkedByMe);
+
+  likeButton.addEventListener('click', async () => {
+    if (!isLoggedIn()) return loginRedirect();
+    likeButton.disabled = true;
+    status.textContent = '';
+    try {
+      const { liked, likeCount } = await toggleLike(post.id);
+      setLikeState(likeButton, liked, likeCount);
+    } catch (error) {
+      status.textContent = error.message;
+    } finally {
+      likeButton.disabled = false;
+    }
+  });
+
+  bookmarkButton.addEventListener('click', async () => {
+    if (!isLoggedIn()) return loginRedirect();
+    bookmarkButton.disabled = true;
+    status.textContent = '';
+    try {
+      const { bookmarked } = await toggleBookmark(post.id);
+      setBookmarkState(bookmarkButton, bookmarked);
+    } catch (error) {
+      status.textContent = error.message;
+    } finally {
+      bookmarkButton.disabled = false;
+    }
+  });
+
+  document.getElementById('post-actions').hidden = false;
+}
+
+function initOwnerActions(post) {
+  document.getElementById('post-edit').href = editorUrl(post.slug);
+  document.getElementById('post-owner-actions').hidden = false;
+  const deleteButton = document.getElementById('post-delete');
+  deleteButton.addEventListener('click', async () => {
+    if (!window.confirm('Bu yazıyı silmek istediğine emin misin? Bu işlem geri alınamaz.')) return;
+    deleteButton.disabled = true;
+    try {
+      await deletePost(post.id);
+      redirect(routes.myPosts);
+    } catch (error) {
+      showAlert(document.getElementById('post-alert'), error.message);
+      deleteButton.disabled = false;
+    }
+  });
 }
 
 function render(post) {
@@ -29,11 +104,7 @@ function render(post) {
   if (post.category) badges.append(badge(post.category.name));
 
   document.getElementById('post-title').textContent = post.title;
-  document.getElementById('post-meta').textContent = [
-    `${post.author.displayName} (@${post.author.username})`,
-    formatDate(post.createdAt),
-    `${post.readingTime} dk okuma`,
-  ].join(' · ');
+  document.getElementById('post-meta').replaceChildren(renderMeta(post));
 
   // renderMarkdown çıktısı DOMPurify ile temizlenmiştir.
   document.getElementById('post-content').innerHTML = renderMarkdown(post.content);
@@ -49,21 +120,14 @@ function render(post) {
     document.getElementById('post-tags').hidden = false;
   }
 
-  if (post.isOwner) {
-    document.getElementById('post-edit').href = editorUrl(post.slug);
-    document.getElementById('post-owner-actions').hidden = false;
-    const deleteButton = document.getElementById('post-delete');
-    deleteButton.addEventListener('click', async () => {
-      if (!window.confirm('Bu yazıyı silmek istediğine emin misin? Bu işlem geri alınamaz.')) return;
-      deleteButton.disabled = true;
-      try {
-        await deletePost(post.id);
-        redirect(routes.myPosts);
-      } catch (error) {
-        showAlert(document.getElementById('post-alert'), error.message);
-        deleteButton.disabled = false;
-      }
-    });
+  if (post.isOwner) initOwnerActions(post);
+
+  // Beğeni, kaydetme ve yorumlar yalnızca yayındaki yazılarda vardır.
+  if (post.status === 'PUBLISHED') {
+    initActions(post);
+    const comments = document.getElementById('comments');
+    comments.hidden = false;
+    void mountComments(comments, post.id);
   }
 
   message.hidden = true;

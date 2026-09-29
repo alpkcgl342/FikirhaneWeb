@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profil — Fikirhane</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/profile.css" />
+    <script type="module" src="/js/pages/profile.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container profile-page">
+      <p id="profile-message" class="page-message" role="status">Profil yükleniyor…</p>
+
+      <div id="profile" hidden>
+        <section class="card profile-card">
+          <div id="profile-avatar" class="profile-avatar"></div>
+          <div class="profile-info">
+            <h1 id="profile-name"></h1>
+            <p id="profile-username" class="profile-username"></p>
+            <p id="profile-bio" class="profile-bio"></p>
+            <ul class="profile-stats">
+              <li><strong id="stat-posts">0</strong> yazı</li>
+              <li><strong id="stat-followers">0</strong> takipçi</li>
+              <li><strong id="stat-following">0</strong> takip</li>
+            </ul>
+            <p id="profile-joined" class="post-meta"></p>
+          </div>
+          <div class="profile-actions">
+            <button id="follow-button" type="button" class="btn btn-primary" hidden>Takip et</button>
+            <button id="edit-button" type="button" class="btn btn-ghost" hidden>Profili düzenle</button>
+            <span id="follow-status" class="form-hint" role="status"></span>
+          </div>
+        </section>
+
+        <form id="profile-form" class="card form profile-form" novalidate hidden>
+          <h2>Profili düzenle</h2>
+          <div id="profile-alert" class="alert" role="alert" hidden></div>
+
+          <div class="form-field">
+            <span id="avatar-label"><strong>Profil fotoğrafı</strong></span>
+            <div class="avatar-field">
+              <div id="avatar-preview"></div>
+              <label class="btn btn-ghost btn-sm" for="avatar-input">Fotoğraf seç</label>
+              <input
+                id="avatar-input"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                class="visually-hidden"
+                aria-labelledby="avatar-label"
+              />
+              <button id="avatar-remove" type="button" class="btn btn-ghost btn-sm">Kaldır</button>
+              <span id="avatar-status" class="form-hint" role="status"></span>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="displayName">Görünen ad</label>
+            <input id="displayName" name="displayName" type="text" maxlength="60" required />
+            <span class="form-error" data-error-for="displayName"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="bio">Biyografi</label>
+            <textarea id="bio" name="bio" rows="3" maxlength="300" aria-describedby="bio-hint"></textarea>
+            <span id="bio-hint" class="form-hint">En fazla 300 karakter.</span>
+            <span class="form-error" data-error-for="bio"></span>
+          </div>
+
+          <div class="profile-form-actions">
+            <button id="cancel-button" type="button" class="btn btn-ghost">Vazgeç</button>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+          </div>
+        </form>
+
+        <section aria-labelledby="profile-posts-heading">
+          <h2 id="profile-posts-heading">Yazılar</h2>
+          <div id="profile-posts"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 Fikirhane</div>
+    </footer>
+  </body>
+</html>

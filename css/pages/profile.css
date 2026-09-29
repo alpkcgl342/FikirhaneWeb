@@ -1,0 +1,98 @@
+/* Profil sayfası */
+
+.profile-page {
+  max-width: 880px;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}
+
+.profile-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-6);
+  align-items: start;
+  margin-bottom: var(--space-8);
+}
+
+.profile-info h1 {
+  font-size: 2rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.profile-username {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.profile-bio {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.profile-bio:empty {
+  display: none;
+}
+
+.profile-stats {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-2);
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+#follow-button[aria-pressed='true'] {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.profile-form {
+  margin-bottom: var(--space-8);
+}
+
+.profile-form h2 {
+  margin: 0;
+}
+
+.avatar-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.profile-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.page-message {
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .profile-card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .profile-stats {
+    justify-content: center;
+  }
+
+  .profile-actions {
+    align-items: center;
+  }
+}

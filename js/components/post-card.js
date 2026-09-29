@@ -1,6 +1,7 @@
 // Yazı özet kartı. Tüm metinler textContent ile yazılır (XSS'e karşı).
 
 import { editorUrl, postUrl } from '../posts.js';
+import { profileUrl } from '../users.js';
 
 const dateFormatter = new Intl.DateTimeFormat('tr-TR', {
   day: 'numeric',
@@ -19,9 +20,15 @@ function el(tag, className, text) {
   return node;
 }
 
-export function metaLine(post) {
-  const parts = [post.author.displayName, formatDate(post.createdAt), `${post.readingTime} dk okuma`];
-  return parts.join(' · ');
+/** "Yazar · tarih · N dk okuma" satırı; yazar adı profil bağlantısıdır. */
+export function renderMeta(post, { counts = false } = {}) {
+  const meta = el('span', 'post-meta');
+  const author = el('a', 'post-author', post.author.displayName);
+  author.href = profileUrl(post.author.username);
+  const parts = [formatDate(post.createdAt), `${post.readingTime} dk okuma`];
+  if (counts) parts.push(`${post.likeCount} beğeni`, `${post.commentCount} yorum`);
+  meta.append(author, ` · ${parts.join(' · ')}`);
+  return meta;
 }
 
 /** { showStatus, showEdit } seçenekleri "Yazılarım" sayfası içindir. */
@@ -56,7 +63,7 @@ export function renderPostCard(post, { showStatus = false, showEdit = false } = 
   if (post.excerpt) body.append(el('p', 'post-card-excerpt', post.excerpt));
 
   const footer = el('div', 'post-card-footer');
-  footer.append(el('span', 'post-meta', metaLine(post)));
+  footer.append(renderMeta(post, { counts: post.status === 'PUBLISHED' }));
   if (showEdit) {
     const edit = el('a', 'btn btn-ghost btn-sm', 'Düzenle');
     edit.href = editorUrl(post.slug);

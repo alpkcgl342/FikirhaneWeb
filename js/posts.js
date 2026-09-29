@@ -32,6 +32,29 @@ export function deletePost(id) {
   return api(`/posts/${id}`, { method: 'DELETE', auth: true });
 }
 
+/** { liked, likeCount } */
+export function toggleLike(postId) {
+  return api(`/posts/${postId}/like`, { method: 'POST', auth: true });
+}
+
+/** { bookmarked } */
+export function toggleBookmark(postId) {
+  return api(`/posts/${postId}/bookmark`, { method: 'POST', auth: true });
+}
+
+export async function listComments(postId) {
+  const { items } = await api(`/posts/${postId}/comments`);
+  return items;
+}
+
+export function createComment(postId, content, parentId) {
+  return api(`/posts/${postId}/comments`, {
+    method: 'POST',
+    body: parentId ? { content, parentId } : { content },
+    auth: true,
+  });
+}
+
 let categoriesPromise = null;
 export function listCategories() {
   categoriesPromise ??= api('/categories').then((result) => result.items);

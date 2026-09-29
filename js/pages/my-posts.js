@@ -7,6 +7,7 @@ const EMPTY_MESSAGES = {
   ALL: 'Henüz hiç yazın yok.',
   DRAFT: 'Taslak yazın yok.',
   PUBLISHED: 'Henüz yayınlanmış yazın yok.',
+  BOOKMARKED: 'Henüz kaydettiğin bir yazı yok. Beğendiğin yazıları 🔖 Kaydet ile buraya ekleyebilirsin.',
 };
 
 function emptyState(status) {
@@ -16,8 +17,13 @@ function emptyState(status) {
   text.textContent = EMPTY_MESSAGES[status];
   const link = document.createElement('a');
   link.className = 'btn btn-primary';
-  link.href = routes.editor;
-  link.textContent = 'Yazmaya başla';
+  if (status === 'BOOKMARKED') {
+    link.href = routes.home;
+    link.textContent = 'Yazılara göz at';
+  } else {
+    link.href = routes.editor;
+    link.textContent = 'Yazmaya başla';
+  }
   box.append(text, link);
   return box;
 }
@@ -25,11 +31,14 @@ function emptyState(status) {
 function show(status) {
   // Yayınlanmış yazılar herkese açık listeden, yazar adıyla filtrelenerek gelir;
   // taslak ve "tümü" ise sunucuda her zaman isteyenin kendi yazılarıyla sınırlıdır.
-  const params =
-    status === 'PUBLISHED' ? { author: getCurrentUser()?.username } : { status };
+  const params = {
+    PUBLISHED: { author: getCurrentUser()?.username },
+    BOOKMARKED: { bookmarked: true },
+  }[status] ?? { status };
+  const ownPosts = status !== 'BOOKMARKED';
   void mountPostList(document.getElementById('my-posts'), {
     params,
-    cardOptions: { showStatus: true, showEdit: true },
+    cardOptions: { showStatus: ownPosts, showEdit: ownPosts },
     emptyState: emptyState(status),
   });
 }

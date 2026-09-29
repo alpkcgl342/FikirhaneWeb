@@ -2,6 +2,7 @@
 
 import { getCurrentUser, logout, refreshCurrentUser } from '../auth.js';
 import { redirect, routes } from '../router.js';
+import { profileUrl } from '../users.js';
 
 function link(href, text, className) {
   const a = document.createElement('a');
@@ -23,10 +24,8 @@ function render(nav, user) {
     return;
   }
 
-  const name = document.createElement('span');
-  name.className = 'nav-user';
-  name.textContent = user.displayName;
-  name.title = `@${user.username}`;
+  const name = link(profileUrl(user.username), user.displayName, 'nav-user');
+  name.title = `Profilim (@${user.username})`;
 
   const logoutButton = document.createElement('button');
   logoutButton.type = 'button';

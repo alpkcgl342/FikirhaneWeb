@@ -40,6 +40,18 @@
         <footer id="post-tags" class="post-tags" hidden>
           <ul class="tag-list"></ul>
         </footer>
+
+        <div id="post-actions" class="post-actions" hidden>
+          <button id="like-button" type="button" class="btn btn-ghost" aria-pressed="false">
+            <span aria-hidden="true">♥</span> <span data-label>Beğen</span> <span data-count class="action-count">0</span>
+          </button>
+          <button id="bookmark-button" type="button" class="btn btn-ghost" aria-pressed="false">
+            <span aria-hidden="true">🔖</span> <span data-label>Kaydet</span>
+          </button>
+          <span id="action-status" class="form-hint" role="status"></span>
+        </div>
+
+        <section id="comments" class="comments" aria-label="Yorumlar" hidden></section>
       </article>
     </main>
 
