@@ -10,7 +10,9 @@ function validate(values) {
   if (!values.displayName) errors.displayName = 'Görünen ad gerekli';
   else if (values.displayName.length > 60) errors.displayName = 'Görünen ad en fazla 60 karakter olabilir';
 
-  if (!USERNAME_PATTERN.test(values.username)) {
+  if (values.username.includes('@')) {
+    errors.username = 'Buraya e-posta değil, kısa bir kullanıcı adı yazın (ör. ali_alp)';
+  } else if (!USERNAME_PATTERN.test(values.username)) {
     errors.username = '3-30 karakter; yalnızca küçük harf, rakam ve _ kullanılabilir';
   }
   if (!EMAIL_PATTERN.test(values.email)) errors.email = 'Geçerli bir e-posta adresi girin';
