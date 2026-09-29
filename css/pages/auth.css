@@ -1,0 +1,39 @@
+/* Giriş ve kayıt sayfaları */
+
+.auth-page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-12) var(--space-4);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-card h1 {
+  font-size: 2rem;
+  margin-bottom: var(--space-2);
+}
+
+.auth-subtitle {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.auth-switch {
+  margin: var(--space-6) 0 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .auth-card.card {
+    padding: var(--space-6);
+  }
+}

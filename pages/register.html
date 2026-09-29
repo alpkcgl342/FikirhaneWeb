@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kayıt ol — Fikirhane</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/auth.css" />
+    <script type="module" src="/js/pages/register.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+      </div>
+    </header>
+
+    <main class="auth-page">
+      <div class="card auth-card">
+        <h1>Aramıza katıl</h1>
+        <p class="auth-subtitle">Bir hesap oluştur, fikirlerini paylaşmaya başla.</p>
+
+        <form id="register-form" class="form" novalidate>
+          <div id="register-alert" class="alert" role="alert" hidden></div>
+
+          <div class="form-field">
+            <label for="displayName">Görünen ad</label>
+            <input id="displayName" name="displayName" type="text" autocomplete="name" maxlength="60" required />
+            <span class="form-error" data-error-for="displayName"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="username">Kullanıcı adı</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              autocomplete="username"
+              autocapitalize="none"
+              spellcheck="false"
+              maxlength="30"
+              aria-describedby="username-hint"
+              required
+            />
+            <span id="username-hint" class="form-hint">Küçük harf, rakam ve _ (3-30 karakter)</span>
+            <span class="form-error" data-error-for="username"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="email">E-posta</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+            <span class="form-error" data-error-for="email"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="password">Şifre</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              minlength="8"
+              maxlength="72"
+              aria-describedby="password-hint"
+              required
+            />
+            <span id="password-hint" class="form-hint">En az 8 karakter</span>
+            <span class="form-error" data-error-for="password"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="passwordConfirm">Şifre (tekrar)</label>
+            <input
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              autocomplete="new-password"
+              maxlength="72"
+              required
+            />
+            <span class="form-error" data-error-for="passwordConfirm"></span>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Hesap oluştur</button>
+        </form>
+
+        <p class="auth-switch">
+          Zaten hesabın var mı? <a id="login-link" href="/pages/login.html">Giriş yap</a>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

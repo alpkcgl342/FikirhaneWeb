@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giriş yap — Fikirhane</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/auth.css" />
+    <script type="module" src="/js/pages/login.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+      </div>
+    </header>
+
+    <main class="auth-page">
+      <div class="card auth-card">
+        <h1>Tekrar hoş geldin</h1>
+        <p class="auth-subtitle">Yazmaya ve tartışmaya kaldığın yerden devam et.</p>
+
+        <form id="login-form" class="form" novalidate>
+          <div id="login-alert" class="alert" role="alert" hidden></div>
+
+          <div class="form-field">
+            <label for="email">E-posta</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+            <span class="form-error" data-error-for="email"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="password">Şifre</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required />
+            <span class="form-error" data-error-for="password"></span>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Giriş yap</button>
+          <button id="resend-confirmation" class="btn btn-ghost btn-block" type="button" hidden>
+            Doğrulama e-postasını tekrar gönder
+          </button>
+        </form>
+
+        <p class="auth-switch">
+          Hesabın yok mu? <a id="register-link" href="/pages/register.html">Kayıt ol</a>
+        </p>
+      </div>
+    </main>
+  </body>
+</html>
