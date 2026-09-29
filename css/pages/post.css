@@ -136,8 +136,15 @@
   overflow-wrap: anywhere;
 }
 
+.comment-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin: var(--space-1) 0 0 40px;
+}
+
 .comment-reply-button {
-  margin-left: 40px;
   padding: 0;
   border: 0;
   background: none;

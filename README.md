@@ -72,6 +72,8 @@ FikirhaneWeb/
 │   ├── editor.html         # Yazı oluştur / düzenle (?slug=), Markdown + canlı önizleme
 │   ├── category.html       # Kategori (?slug=) ve etiket (?tag=) sayfası
 │   ├── search.html         # Arama (?q=): kişiler ve yazılar
+│   ├── notifications.html  # Bildirimler (açılınca okundu sayılır)
+│   ├── admin.html          # Yönetim paneli: şikâyetler ve kullanıcılar (moderatör/yönetici)
 │   ├── my-posts.html       # Yazılarım: taslaklar, yayınlananlar, kaydedilenler
 │   └── profile.html        # Profil (?u=kullaniciadi): takip, yazılar, profil düzenleme
 ├── css/
@@ -85,6 +87,7 @@ FikirhaneWeb/
 │   ├── router.js
 │   ├── posts.js            # Yazı, kategori, beğeni, kaydetme, yorum ve görsel yükleme çağrıları
 │   ├── users.js            # Profil ve takip çağrıları
+│   ├── moderation.js       # Bildirim, şikâyet ve yönetim çağrıları
 │   ├── markdown.js         # Markdown → temizlenmiş HTML
 │   ├── image-resize.js     # Yüklemeden önce görseli küçültme
 │   ├── components/
@@ -100,7 +103,7 @@ FikirhaneWeb/
 
 - Yorumlar düz metindir (`textContent`), iç içe yanıtlar 3 seviyeden sonra daha fazla içeri kaydırılmaz.
 
-Sonraki fazda `pages/` altına `admin` sayfası eklenecek.
+- Yazı, yorum ve profillerde "Şikâyet et" bir `<dialog>` penceresi açar. Moderatörler yazı ve yorumları doğrudan sayfada da kaldırabilir. Arayüzdeki rol kontrolleri yalnızca görünümü düzenler; asıl yetki kontrolü API'dedir.
 
 ---
 
@@ -132,7 +135,7 @@ Site `http://localhost:5173` üzerinde açılır. Yerelde istekler `http://local
 - [x] **Faz 2 — Yazılar:** Yazı CRUD, Markdown editör, kategoriler, etiketler, görsel yükleme
 - [x] **Faz 3 — Etkileşim:** Yorumlar, beğeni, kaydetme, takip
 - [x] **Faz 4 — Keşfet:** Ana akış, arama, popüler yazılar
-- [ ] **Faz 5 — Topluluk:** Bildirimler, şikâyet ve moderasyon paneli
+- [x] **Faz 5 — Topluluk:** Bildirimler, şikâyet ve moderasyon paneli
 - [ ] **Faz 6 — Yayın:** Testler, canlı ortama dağıtım, SEO ve performans
 - [ ] **Sonrası:** Karanlık tema, şifre sıfırlama, Google ile giriş
 

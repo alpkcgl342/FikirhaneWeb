@@ -236,6 +236,71 @@
   box-shadow: 0 0 0 3px rgb(249 115 22 / 20%);
 }
 
+/* Şikâyet penceresi */
+.report-dialog {
+  width: min(480px, calc(100vw - 2rem));
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+}
+
+.report-dialog::backdrop {
+  background: rgb(31 29 26 / 45%);
+}
+
+.report-dialog h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* Küçük metin butonu (Şikâyet et, Kaldır…) */
+.link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.link-button.danger:hover {
+  color: var(--color-danger);
+}
+
+/* Üst menü: bildirim sayısı rozeti */
+.nav-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.nav-count:empty {
+  display: none;
+}
+
 /* Profil fotoğrafı / baş harf */
 .avatar {
   --avatar-size: 40px;

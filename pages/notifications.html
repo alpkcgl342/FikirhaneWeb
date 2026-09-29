@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bildirimler — Fikirhane</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/notifications.css" />
+    <script type="module" src="/js/pages/notifications.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container notifications-page">
+      <h1>Bildirimler</h1>
+      <ol id="notification-list" class="notification-list"></ol>
+      <p id="notification-status" class="list-status" role="status">Bildirimler yükleniyor…</p>
+      <button id="notification-more" type="button" class="btn btn-ghost load-more" hidden>Daha fazla</button>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 Fikirhane</div>
+    </footer>
+  </body>
+</html>

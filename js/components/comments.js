@@ -1,11 +1,13 @@
 // İç içe yorumlar: listeleme, yorum yapma ve yanıtlama.
 // Yorumlar düz metindir; DOM'a yalnızca textContent ile yazılır.
 
-import { isLoggedIn } from '../auth.js';
+import { getCurrentUser, isLoggedIn } from '../auth.js';
+import { isModerator, removeComment } from '../moderation.js';
 import { createComment, listComments } from '../posts.js';
 import { routes } from '../router.js';
 import { profileUrl } from '../users.js';
 import { renderAvatar } from './avatar.js';
+import { openReportDialog } from './report-dialog.js';
 
 const MAX_LENGTH = 2000;
 /** Bu derinlikten sonra yanıtlar daha fazla içeri kaydırılmaz (dar ekranda okunabilirlik). */
@@ -92,6 +94,7 @@ function commentForm({ placeholder, submitLabel, onSubmit, onCancel }) {
  */
 export async function mountComments(container, postId, { onCountChange } = {}) {
   const loggedIn = isLoggedIn();
+  const me = getCurrentUser();
   let count = 0;
 
   const heading = el('h2', 'comments-title', 'Yorumlar');
@@ -123,6 +126,8 @@ export async function mountComments(container, postId, { onCountChange } = {}) {
     if (depth >= MAX_INDENT_DEPTH) replies.classList.add('comment-replies-flat');
 
     if (loggedIn) {
+      const actions = el('div', 'comment-actions');
+
       const replyButton = el('button', 'comment-reply-button', 'Yanıtla');
       replyButton.type = 'button';
       replyButton.addEventListener('click', () => {
@@ -138,10 +143,43 @@ export async function mountComments(container, postId, { onCountChange } = {}) {
           },
           onCancel: () => form.remove(),
         });
-        body.after(form);
+        actions.after(form);
         textarea.focus();
       });
-      body.after(replyButton);
+      actions.append(replyButton);
+
+      if (comment.author.id !== me?.id) {
+        const reportButton = el('button', 'link-button', 'Şikâyet et');
+        reportButton.type = 'button';
+        reportButton.addEventListener('click', async () => {
+          if (await openReportDialog('COMMENT', comment.id)) {
+            reportButton.replaceWith(el('span', 'comment-time', 'Şikâyet edildi'));
+          }
+        });
+        actions.append(reportButton);
+      }
+
+      if (isModerator(me)) {
+        const removeButton = el('button', 'link-button danger', 'Kaldır');
+        removeButton.type = 'button';
+        removeButton.addEventListener('click', async () => {
+          if (!window.confirm('Bu yorum ve yanıtları kaldırılacak. Emin misin?')) return;
+          removeButton.disabled = true;
+          try {
+            await removeComment(comment.id);
+            // Yanıtlar da silindiği için sayaçtan hepsi düşülür.
+            const removed = 1 + item.querySelectorAll('.comment').length;
+            item.remove();
+            setCount(count - removed);
+          } catch (error) {
+            window.alert(error.message);
+            removeButton.disabled = false;
+          }
+        });
+        actions.append(removeButton);
+      }
+
+      body.after(actions);
     }
 
     for (const reply of comment.replies) replies.append(renderComment(reply, depth + 1));

@@ -1,9 +1,19 @@
 // Oturum durumuna göre üst menüyü doldurur; arama kutusunu ekler
 
 import { getCurrentUser, logout, refreshCurrentUser } from '../auth.js';
+import { adminUrl, isModerator, notificationsUrl, unreadNotificationCount } from '../moderation.js';
 import { searchUrl } from '../posts.js';
 import { getQueryParam, redirect, routes } from '../router.js';
 import { profileUrl } from '../users.js';
+
+let unreadPromise = null;
+
+/** Bildirimler sayfası okundu işaretledikten sonra rozetin sıfırlanması için. */
+export function resetUnreadCount() {
+  unreadPromise = Promise.resolve(0);
+  const badge = document.querySelector('.site-nav .nav-count');
+  if (badge) badge.textContent = '';
+}
 
 function link(href, text, className) {
   const a = document.createElement('a');
@@ -70,9 +80,28 @@ function render(nav, user) {
     redirect(routes.home);
   });
 
+  // Bildirimler: okunmamış sayısı arka planda (sayfa başına bir kez) yüklenir.
+  const notifications = link(notificationsUrl, '🔔', 'btn btn-ghost');
+  notifications.setAttribute('aria-label', 'Bildirimler');
+  notifications.title = 'Bildirimler';
+  const count = document.createElement('span');
+  count.className = 'nav-count';
+  notifications.append(count);
+  unreadPromise ??= unreadNotificationCount();
+  const request = unreadPromise;
+  request
+    .then((n) => {
+      // Bu arada sayaç sıfırlandıysa (bildirimler okundu) eski sonuç yazılmaz.
+      if (request !== unreadPromise) return;
+      count.textContent = n > 0 ? String(Math.min(n, 99)) : '';
+      notifications.setAttribute('aria-label', n > 0 ? `Bildirimler (${n} okunmamış)` : 'Bildirimler');
+    })
+    .catch(() => {});
+
+  nav.append(searchLink, link(routes.editor, 'Yaz', 'btn btn-primary'));
+  if (isModerator(user)) nav.append(link(adminUrl, 'Yönetim', 'btn btn-ghost nav-secondary'));
   nav.append(
-    searchLink,
-    link(routes.editor, 'Yaz', 'btn btn-primary'),
+    notifications,
     link(routes.myPosts, 'Yazılarım', 'btn btn-ghost nav-secondary'),
     name,
     logoutButton,

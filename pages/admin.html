@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yönetim — Fikirhane</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/admin.css" />
+    <script type="module" src="/js/pages/admin.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container admin-page">
+      <h1>Yönetim</h1>
+      <p id="admin-message" class="list-status" role="status">Yükleniyor…</p>
+
+      <div id="admin" hidden>
+        <div class="filter-tabs admin-sections" role="tablist" aria-label="Bölüm">
+          <button type="button" class="btn btn-ghost" role="tab" aria-selected="true" data-section="reports">
+            Şikâyetler
+          </button>
+          <button type="button" class="btn btn-ghost" role="tab" aria-selected="false" data-section="users">
+            Kullanıcılar
+          </button>
+        </div>
+
+        <section id="section-reports" aria-label="Şikâyetler">
+          <div class="filter-tabs" role="tablist" aria-label="Şikâyet durumu">
+            <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="true" data-status="PENDING">
+              Bekleyen
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-status="RESOLVED">
+              Çözülen
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-status="DISMISSED">
+              Reddedilen
+            </button>
+          </div>
+          <ol id="report-list" class="admin-list"></ol>
+          <p id="report-status" class="list-status" role="status"></p>
+          <button id="report-more" type="button" class="btn btn-ghost load-more" hidden>Daha fazla</button>
+        </section>
+
+        <section id="section-users" aria-label="Kullanıcılar" hidden>
+          <form id="user-search" class="admin-search" role="search">
+            <input
+              name="q"
+              type="search"
+              maxlength="100"
+              placeholder="Ad, kullanıcı adı veya e-posta"
+              aria-label="Kullanıcı ara"
+            />
+            <button type="submit" class="btn btn-primary">Ara</button>
+          </form>
+          <ol id="user-list" class="admin-list"></ol>
+          <p id="user-status" class="list-status" role="status"></p>
+          <button id="user-more" type="button" class="btn btn-ghost load-more" hidden>Daha fazla</button>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 Fikirhane</div>
+    </footer>
+  </body>
+</html>

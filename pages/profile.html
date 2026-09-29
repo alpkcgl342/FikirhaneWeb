@@ -28,6 +28,7 @@
         <section class="card profile-card">
           <div id="profile-avatar" class="profile-avatar"></div>
           <div class="profile-info">
+            <p id="profile-banned" class="badge badge-draft" hidden>Hesap askıya alındı</p>
             <h1 id="profile-name"></h1>
             <p id="profile-username" class="profile-username"></p>
             <p id="profile-bio" class="profile-bio"></p>
@@ -41,6 +42,8 @@
           <div class="profile-actions">
             <button id="follow-button" type="button" class="btn btn-primary" hidden>Takip et</button>
             <button id="edit-button" type="button" class="btn btn-ghost" hidden>Profili düzenle</button>
+            <button id="ban-button" type="button" class="btn btn-danger btn-sm" hidden>Engelle</button>
+            <button id="report-user" type="button" class="link-button" hidden>Şikâyet et</button>
             <span id="follow-status" class="form-hint" role="status"></span>
           </div>
         </section>

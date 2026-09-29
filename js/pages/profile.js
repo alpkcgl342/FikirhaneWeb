@@ -3,6 +3,8 @@ import { renderAvatar } from '../components/avatar.js';
 import { clearErrors, hideAlert, setFieldError, showAlert } from '../components/form.js';
 import { initHeader } from '../components/header.js';
 import { mountPostList } from '../components/post-list.js';
+import { openReportDialog } from '../components/report-dialog.js';
+import { isModerator, setBan } from '../moderation.js';
 import { prepareImage } from '../image-resize.js';
 import { uploadImage } from '../posts.js';
 import { getQueryParam, redirect, routes } from '../router.js';
@@ -31,6 +33,8 @@ function renderProfile() {
   document.getElementById('profile-joined').textContent =
     `${joinedFormatter.format(new Date(profile.createdAt))} tarihinde katıldı`;
 
+  document.getElementById('profile-banned').hidden = !profile.isBanned;
+
   if (profile.isMe) {
     editButton.hidden = false;
     followButton.hidden = true;
@@ -38,6 +42,33 @@ function renderProfile() {
     followButton.hidden = false;
     followButton.setAttribute('aria-pressed', String(profile.isFollowing));
     followButton.textContent = profile.isFollowing ? 'Takibi bırak' : 'Takip et';
+    document.getElementById('report-user').hidden = !isLoggedIn();
+    // Asıl yetki kontrolü sunucuda (yöneticiler engellenemez, moderatörü yalnızca yönetici engeller).
+    const banButton = document.getElementById('ban-button');
+    banButton.hidden = !isModerator();
+    banButton.textContent = profile.isBanned ? 'Engeli kaldır' : 'Engelle';
+  }
+}
+
+async function handleBan() {
+  const banned = !profile.isBanned;
+  const question = banned
+    ? `${profile.displayName} engellensin mi? Giriş yapamaz ve içerik paylaşamaz.`
+    : `${profile.displayName} kullanıcısının engeli kaldırılsın mı?`;
+  if (!window.confirm(question)) return;
+
+  const button = document.getElementById('ban-button');
+  const status = document.getElementById('follow-status');
+  button.disabled = true;
+  status.textContent = '';
+  try {
+    await setBan(profile.id, banned);
+    profile = { ...profile, isBanned: banned };
+    renderProfile();
+  } catch (error) {
+    status.textContent = error.message;
+  } finally {
+    button.disabled = false;
   }
 }
 
@@ -159,6 +190,14 @@ async function init() {
   document.getElementById('profile').hidden = false;
 
   followButton.addEventListener('click', handleFollow);
+  document.getElementById('ban-button').addEventListener('click', handleBan);
+  document.getElementById('report-user').addEventListener('click', async (event) => {
+    const button = event.currentTarget;
+    if (await openReportDialog('USER', profile.id)) {
+      button.hidden = true;
+      document.getElementById('follow-status').textContent = 'Şikâyetin alındı, teşekkürler.';
+    }
+  });
   editButton.addEventListener('click', openForm);
   document.getElementById('cancel-button').addEventListener('click', closeForm);
   document.getElementById('avatar-input').addEventListener('change', handleAvatarChange);

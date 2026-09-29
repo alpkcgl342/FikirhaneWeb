@@ -3,7 +3,9 @@ import { mountComments } from '../components/comments.js';
 import { showAlert } from '../components/form.js';
 import { initHeader } from '../components/header.js';
 import { renderCategoryBadge, renderMeta, renderTagList } from '../components/post-card.js';
+import { openReportDialog } from '../components/report-dialog.js';
 import { renderMarkdown } from '../markdown.js';
+import { isModerator, removePost } from '../moderation.js';
 import { deletePost, editorUrl, getPost, toggleBookmark, toggleLike } from '../posts.js';
 import { getQueryParam, redirect, routes } from '../router.js';
 
@@ -69,6 +71,34 @@ function initActions(post) {
       bookmarkButton.disabled = false;
     }
   });
+
+  if (!post.isOwner) {
+    const reportButton = document.getElementById('report-post');
+    reportButton.hidden = false;
+    reportButton.addEventListener('click', async () => {
+      if (await openReportDialog('POST', post.id)) {
+        status.textContent = 'Şikâyetin alındı, teşekkürler.';
+        reportButton.hidden = true;
+      }
+    });
+  }
+
+  // Moderatörler başkasının yazısını kaldırabilir (yazar kendi yazısını "Sil" ile siler).
+  if (!post.isOwner && isModerator()) {
+    const removeButton = document.getElementById('mod-remove-post');
+    removeButton.hidden = false;
+    removeButton.addEventListener('click', async () => {
+      if (!window.confirm('Bu yazı moderasyon gereği kaldırılacak. Emin misin?')) return;
+      removeButton.disabled = true;
+      try {
+        await removePost(post.id);
+        redirect(routes.home);
+      } catch (error) {
+        status.textContent = error.message;
+        removeButton.disabled = false;
+      }
+    });
+  }
 
   document.getElementById('post-actions').hidden = false;
 }
