@@ -1,0 +1,45 @@
+/* Yazı detay sayfası */
+
+.post-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}
+
+.post-cover {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-8);
+}
+
+.post-header {
+  margin-bottom: var(--space-8);
+}
+
+.post-header .post-card-badges {
+  margin-bottom: var(--space-3);
+}
+
+.post-title {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  overflow-wrap: anywhere;
+}
+
+.post-owner-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.post-tags {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.page-message {
+  text-align: center;
+  padding: var(--space-16) var(--space-4);
+}

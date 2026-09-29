@@ -44,12 +44,7 @@
   font-weight: 600;
 }
 
-.feed-placeholder {
-  text-align: center;
+.latest {
+  max-width: 880px;
   margin-bottom: var(--space-16);
-}
-
-.feed-placeholder p:last-child {
-  margin-bottom: 0;
-  color: var(--color-text-muted);
 }

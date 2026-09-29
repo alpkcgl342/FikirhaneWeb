@@ -1,0 +1,33 @@
+/* Yazılarım */
+
+.my-posts-page {
+  max-width: 880px;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}
+
+.my-posts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.my-posts-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.filter-tabs button[aria-selected='true'] {
+  background: var(--color-text);
+  color: #fff;
+  border-color: var(--color-text);
+}

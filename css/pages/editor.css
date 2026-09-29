@@ -1,0 +1,133 @@
+/* Yazı editörü */
+
+.editor-page {
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.editor-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.editor-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.editor-title input {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.cover-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.cover-preview {
+  width: 200px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.cover-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Yaz / Önizleme sekmeleri yalnızca dar ekranda görünür */
+.editor-tabs {
+  display: none;
+  gap: var(--space-2);
+}
+
+.editor-tabs button[aria-selected='true'] {
+  background: var(--color-text);
+  color: #fff;
+  border-color: var(--color-text);
+}
+
+.editor-panes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.editor-panes textarea {
+  min-height: 520px;
+  resize: vertical;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.editor-preview {
+  min-height: 520px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: var(--space-4) var(--space-6);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.editor-preview:empty::before {
+  content: 'Önizleme burada görünecek';
+  color: var(--color-text-muted);
+}
+
+.editor-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.editor-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+@media (min-width: 801px) {
+  /* Geniş ekranda iki bölme de her zaman görünür */
+  .editor-panes [data-pane] {
+    display: block !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .editor-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-tabs {
+    display: flex;
+  }
+
+  .editor-panes {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-panes textarea,
+  .editor-preview {
+    min-height: 360px;
+  }
+}

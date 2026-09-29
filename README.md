@@ -64,27 +64,37 @@ Framework kullanılmadan saf **HTML5, CSS3 ve JavaScript (ES6+ modülleri)** ile
 
 ```
 FikirhaneWeb/
-├── index.html              # Ana akış
+├── index.html              # Ana sayfa, son yazılar
 ├── pages/
 │   ├── login.html
-│   └── register.html
+│   ├── register.html
+│   ├── post.html           # Yazı detay (?slug=)
+│   ├── editor.html         # Yazı oluştur / düzenle (?slug=), Markdown + canlı önizleme
+│   └── my-posts.html       # Yazılarım: taslaklar ve yayınlananlar
 ├── css/
 │   ├── base.css            # Değişkenler, reset, tipografi
-│   ├── components.css      # Buton, kart, form vb.
+│   ├── components.css      # Buton, kart, form, yazı kartı, Markdown içerik (.prose)
 │   └── pages/
 ├── js/
 │   ├── config.js           # API adresi
 │   ├── api.js              # fetch sarmalayıcısı, token yönetimi
 │   ├── auth.js
 │   ├── router.js
+│   ├── posts.js            # Yazı, kategori ve görsel yükleme çağrıları
+│   ├── markdown.js         # Markdown → temizlenmiş HTML
+│   ├── image-resize.js     # Yüklemeden önce görseli küçültme
 │   ├── components/
-│   └── pages/
+│   ├── pages/
+│   └── vendor/             # marked (MIT), DOMPurify (Apache-2.0 / MPL-2.0)
 ├── assets/
 ├── serve.json              # Yerel `npx serve` ayarı
 └── vercel.json             # /api yönlendirmesi, temiz URL'ler
 ```
 
-Sonraki fazlarda `pages/` altına `post`, `editor`, `profile`, `category`, `search`, `admin` sayfaları eklenecek.
+- Markdown `marked` ile HTML'e çevrilir ve `DOMPurify` ile temizlenir: `<script>`, `onerror` gibi olay nitelikleri, `javascript:` bağlantıları ve `iframe` kaldırılır. Harici CDN'e bağımlı kalmamak için iki kütüphane `js/vendor/` altında tutulur.
+- Kapak görselleri yüklenmeden önce tarayıcıda en fazla 1600 px genişliğe küçültülüp WebP'ye çevrilir (sunucu sınırı 4 MB).
+
+Sonraki fazlarda `pages/` altına `profile`, `category`, `search`, `admin` sayfaları eklenecek.
 
 ---
 
@@ -113,7 +123,7 @@ Site `http://localhost:5173` üzerinde açılır. Yerelde istekler `http://local
 ## Yol Haritası
 
 - [x] **Faz 1 — Temel:** Proje iskeleti, veritabanı şeması, kayıt / giriş, e-posta doğrulama
-- [ ] **Faz 2 — Yazılar:** Yazı CRUD, Markdown editör, kategoriler, etiketler, görsel yükleme
+- [x] **Faz 2 — Yazılar:** Yazı CRUD, Markdown editör, kategoriler, etiketler, görsel yükleme
 - [ ] **Faz 3 — Etkileşim:** Yorumlar, beğeni, kaydetme, takip
 - [ ] **Faz 4 — Keşfet:** Ana akış, arama, popüler yazılar
 - [ ] **Faz 5 — Topluluk:** Bildirimler, şikâyet ve moderasyon paneli

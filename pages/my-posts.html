@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yazılarım — Fikirhane</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/my-posts.css" />
+    <script type="module" src="/js/pages/my-posts.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container my-posts-page">
+      <div class="my-posts-header">
+        <h1>Yazılarım</h1>
+        <a class="btn btn-primary" href="/pages/editor.html">Yeni yazı</a>
+      </div>
+
+      <div class="filter-tabs" role="tablist" aria-label="Yazı durumu">
+        <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="true" data-status="ALL">
+          Tümü
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-status="DRAFT">
+          Taslaklar
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-status="PUBLISHED">
+          Yayınlananlar
+        </button>
+      </div>
+
+      <div id="my-posts"></div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 Fikirhane</div>
+    </footer>
+  </body>
+</html>

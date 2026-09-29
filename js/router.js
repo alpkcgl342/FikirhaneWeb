@@ -6,7 +6,17 @@ export const routes = {
   home: '/',
   login: '/pages/login.html',
   register: '/pages/register.html',
+  editor: '/pages/editor.html',
+  myPosts: '/pages/my-posts.html',
 };
+
+/** Giriş yapmamış kullanıcıyı, dönüşte bu sayfaya gelecek şekilde giriş sayfasına yollar. */
+export function requireAuth() {
+  if (isLoggedIn()) return true;
+  const next = encodeURIComponent(window.location.pathname + window.location.search);
+  window.location.replace(`${routes.login}?next=${next}`);
+  return false;
+}
 
 export function getQueryParam(name) {
   return new URLSearchParams(window.location.search).get(name);

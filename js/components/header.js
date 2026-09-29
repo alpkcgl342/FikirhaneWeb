@@ -37,7 +37,12 @@ function render(nav, user) {
     redirect(routes.home);
   });
 
-  nav.append(name, logoutButton);
+  nav.append(
+    link(routes.editor, 'Yaz', 'btn btn-primary'),
+    link(routes.myPosts, 'Yazılarım', 'btn btn-ghost nav-secondary'),
+    name,
+    logoutButton,
+  );
 }
 
 export async function initHeader() {

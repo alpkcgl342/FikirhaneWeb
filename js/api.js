@@ -91,14 +91,16 @@ async function refreshSession() {
  * Başarısız yanıtlarda ApiError fırlatır.
  */
 export async function api(path, { method = 'GET', body, auth = false } = {}) {
+  // FormData (dosya yükleme) olduğu gibi gönderilir; tarayıcı multipart başlığını kendisi ekler.
+  const isForm = body instanceof FormData;
   const send = (session) => {
     const headers = { Accept: 'application/json' };
-    if (body !== undefined) headers['Content-Type'] = 'application/json';
+    if (body !== undefined && !isForm) headers['Content-Type'] = 'application/json';
     if (auth && session?.accessToken) headers.Authorization = `Bearer ${session.accessToken}`;
     return fetch(`${API_BASE}${path}`, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: body === undefined || isForm ? body : JSON.stringify(body),
     });
   };
 

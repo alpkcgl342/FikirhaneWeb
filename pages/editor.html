@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yazı yaz — Fikirhane</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/editor.css" />
+    <script type="module" src="/js/pages/editor.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container editor-page">
+      <div class="editor-header">
+        <h1 id="editor-heading">Yeni yazı</h1>
+        <span class="post-meta" id="editor-status"></span>
+      </div>
+
+      <form id="editor-form" class="form" novalidate>
+        <div id="editor-alert" class="alert" role="alert" hidden></div>
+
+        <div class="form-field editor-title">
+          <label for="title">Başlık</label>
+          <input id="title" name="title" type="text" maxlength="200" autocomplete="off" required />
+          <span class="form-error" data-error-for="title"></span>
+        </div>
+
+        <div class="editor-meta">
+          <div class="form-field">
+            <label for="categoryId">Kategori</label>
+            <select id="categoryId" name="categoryId">
+              <option value="">Kategori seç (isteğe bağlı)</option>
+            </select>
+            <span class="form-error" data-error-for="categoryId"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="tags">Etiketler</label>
+            <input
+              id="tags"
+              name="tags"
+              type="text"
+              autocomplete="off"
+              placeholder="ör. yapay zeka, eğitim"
+              aria-describedby="tags-hint"
+            />
+            <span id="tags-hint" class="form-hint">Virgülle ayırın; en fazla 5 etiket.</span>
+            <span class="form-error" data-error-for="tags"></span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <span class="form-label" id="cover-label"><strong>Kapak görseli</strong></span>
+          <div class="cover-field">
+            <img id="cover-preview" class="cover-preview" alt="Kapak görseli önizlemesi" hidden />
+            <div class="cover-actions">
+              <label class="btn btn-ghost btn-sm" for="cover-input">Görsel seç</label>
+              <input
+                id="cover-input"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                class="visually-hidden"
+                aria-labelledby="cover-label"
+              />
+              <button id="cover-remove" type="button" class="btn btn-ghost btn-sm" hidden>Kaldır</button>
+            </div>
+            <span id="cover-status" class="form-hint" role="status"></span>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="content">İçerik <span class="form-hint">(Markdown)</span></label>
+          <div class="editor-tabs" role="tablist" aria-label="Görünüm">
+            <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="true" data-tab="write">
+              Yaz
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-tab="preview">
+              Önizleme
+            </button>
+          </div>
+          <div class="editor-panes">
+            <textarea
+              id="content"
+              name="content"
+              data-pane="write"
+              placeholder="# Başlık&#10;&#10;**Kalın**, _italik_, [bağlantı](https://…), listeler ve `kod` kullanabilirsin."
+              required
+            ></textarea>
+            <div id="preview" class="editor-preview prose" data-pane="preview" aria-live="polite" hidden></div>
+          </div>
+          <span class="form-error" data-error-for="content"></span>
+        </div>
+
+        <div class="editor-footer">
+          <span class="post-meta" id="reading-time">Tahmini okuma süresi: 1 dk</span>
+          <div class="editor-actions">
+            <button id="delete-button" type="button" class="btn btn-danger" hidden>Sil</button>
+            <button id="draft-button" type="submit" class="btn btn-ghost" data-status="DRAFT">
+              Taslak olarak kaydet
+            </button>
+            <button id="publish-button" type="submit" class="btn btn-primary" data-status="PUBLISHED">
+              Yayınla
+            </button>
+          </div>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
