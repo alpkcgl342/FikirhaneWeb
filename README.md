@@ -64,12 +64,14 @@ Framework kullanılmadan saf **HTML5, CSS3 ve JavaScript (ES6+ modülleri)** ile
 
 ```
 FikirhaneWeb/
-├── index.html              # Ana sayfa, son yazılar
+├── index.html              # Ana sayfa: akış (en yeniler / popüler / takip ettiklerim)
 ├── pages/
 │   ├── login.html
 │   ├── register.html
 │   ├── post.html           # Yazı detay (?slug=)
 │   ├── editor.html         # Yazı oluştur / düzenle (?slug=), Markdown + canlı önizleme
+│   ├── category.html       # Kategori (?slug=) ve etiket (?tag=) sayfası
+│   ├── search.html         # Arama (?q=): kişiler ve yazılar
 │   ├── my-posts.html       # Yazılarım: taslaklar, yayınlananlar, kaydedilenler
 │   └── profile.html        # Profil (?u=kullaniciadi): takip, yazılar, profil düzenleme
 ├── css/
@@ -98,7 +100,7 @@ FikirhaneWeb/
 
 - Yorumlar düz metindir (`textContent`), iç içe yanıtlar 3 seviyeden sonra daha fazla içeri kaydırılmaz.
 
-Sonraki fazlarda `pages/` altına `category`, `search`, `admin` sayfaları eklenecek.
+Sonraki fazda `pages/` altına `admin` sayfası eklenecek.
 
 ---
 
@@ -129,7 +131,7 @@ Site `http://localhost:5173` üzerinde açılır. Yerelde istekler `http://local
 - [x] **Faz 1 — Temel:** Proje iskeleti, veritabanı şeması, kayıt / giriş, e-posta doğrulama
 - [x] **Faz 2 — Yazılar:** Yazı CRUD, Markdown editör, kategoriler, etiketler, görsel yükleme
 - [x] **Faz 3 — Etkileşim:** Yorumlar, beğeni, kaydetme, takip
-- [ ] **Faz 4 — Keşfet:** Ana akış, arama, popüler yazılar
+- [x] **Faz 4 — Keşfet:** Ana akış, arama, popüler yazılar
 - [ ] **Faz 5 — Topluluk:** Bildirimler, şikâyet ve moderasyon paneli
 - [ ] **Faz 6 — Yayın:** Testler, canlı ortama dağıtım, SEO ve performans
 - [ ] **Sonrası:** Karanlık tema, şifre sıfırlama, Google ile giriş

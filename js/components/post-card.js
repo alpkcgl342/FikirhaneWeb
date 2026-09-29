@@ -1,6 +1,6 @@
 // Yazı özet kartı. Tüm metinler textContent ile yazılır (XSS'e karşı).
 
-import { editorUrl, postUrl } from '../posts.js';
+import { categoryUrl, editorUrl, postUrl, tagUrl } from '../posts.js';
 import { profileUrl } from '../users.js';
 
 const dateFormatter = new Intl.DateTimeFormat('tr-TR', {
@@ -18,6 +18,26 @@ function el(tag, className, text) {
   if (className) node.className = className;
   if (text !== undefined) node.textContent = text;
   return node;
+}
+
+/** Kategori rozeti; kategori sayfasına bağlantıdır. */
+export function renderCategoryBadge(category) {
+  const badge = el('a', 'badge', category.name);
+  badge.href = categoryUrl(category.slug);
+  return badge;
+}
+
+/** #etiket listesi; her etiket kendi sayfasına bağlantıdır. */
+export function renderTagList(tags) {
+  const list = el('ul', 'tag-list');
+  for (const tag of tags) {
+    const item = el('li');
+    const link = el('a', 'tag', `#${tag}`);
+    link.href = tagUrl(tag);
+    item.append(link);
+    list.append(item);
+  }
+  return list;
 }
 
 /** "Yazar · tarih · N dk okuma" satırı; yazar adı profil bağlantısıdır. */
@@ -51,7 +71,7 @@ export function renderPostCard(post, { showStatus = false, showEdit = false } = 
 
   const badges = el('div', 'post-card-badges');
   if (showStatus && post.status === 'DRAFT') badges.append(el('span', 'badge badge-draft', 'Taslak'));
-  if (post.category) badges.append(el('span', 'badge', post.category.name));
+  if (post.category) badges.append(renderCategoryBadge(post.category));
   if (badges.childElementCount) body.append(badges);
 
   const title = el('h2', 'post-card-title');
@@ -71,11 +91,7 @@ export function renderPostCard(post, { showStatus = false, showEdit = false } = 
   }
   body.append(footer);
 
-  if (post.tags.length) {
-    const tags = el('ul', 'tag-list');
-    for (const tag of post.tags) tags.append(el('li', 'tag', `#${tag}`));
-    body.append(tags);
-  }
+  if (post.tags.length) body.append(renderTagList(post.tags));
 
   card.append(body);
   return card;

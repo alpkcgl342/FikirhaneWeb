@@ -296,6 +296,57 @@
   color: var(--color-text-muted);
 }
 
+a.tag:hover {
+  color: var(--color-primary);
+}
+
+a.badge:hover {
+  text-decoration: none;
+  background: #ffe2cf;
+  color: var(--color-primary-hover);
+}
+
+/* Sekmeler (akış, sıralama, yazı durumu) */
+.filter-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.filter-tabs button[aria-selected='true'] {
+  background: var(--color-text);
+  color: #fff;
+  border-color: var(--color-text);
+}
+
+/* Üst menüdeki arama */
+.site-search {
+  flex: 1;
+  max-width: 320px;
+}
+
+.site-search input {
+  width: 100%;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.site-search input:focus {
+  border-color: var(--color-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(249 115 22 / 20%);
+}
+
+.search-link {
+  display: none;
+}
+
 /* Yazı kartları ve listesi */
 .post-list {
   display: flex;
@@ -500,6 +551,15 @@
 
   .nav-secondary {
     display: none;
+  }
+
+  /* Dar ekranda arama kutusu yerine arama sayfasına bağlantı */
+  .site-search {
+    display: none;
+  }
+
+  .search-link {
+    display: inline-flex;
   }
 }
 

@@ -1,0 +1,118 @@
+/* Kategori, etiket ve arama sayfaları */
+
+.listing-page {
+  max-width: 880px;
+  padding: var(--space-8) var(--space-4) var(--space-16);
+}
+
+.listing-header {
+  margin-bottom: var(--space-6);
+}
+
+.listing-kind {
+  margin: 0 0 var(--space-1);
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.listing-header h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  margin-bottom: var(--space-2);
+  overflow-wrap: anywhere;
+}
+
+.listing-description {
+  color: var(--color-text-muted);
+}
+
+.listing-description:empty {
+  display: none;
+}
+
+.category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.category-nav a[aria-current='page'] {
+  background: var(--color-text);
+  color: #fff;
+}
+
+/* Arama */
+.search-form {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+
+.search-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.search-form input:focus {
+  border-color: var(--color-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(249 115 22 / 20%);
+}
+
+.search-section-title {
+  font-size: 1.25rem;
+  margin: var(--space-6) 0 var(--space-3);
+}
+
+.user-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+
+.user-result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  min-width: 0;
+}
+
+.user-result:hover {
+  border-color: var(--color-primary);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.user-result-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-result-text strong,
+.user-result-text span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-result-text span {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}

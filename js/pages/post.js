@@ -2,7 +2,7 @@ import { isLoggedIn } from '../auth.js';
 import { mountComments } from '../components/comments.js';
 import { showAlert } from '../components/form.js';
 import { initHeader } from '../components/header.js';
-import { renderMeta } from '../components/post-card.js';
+import { renderCategoryBadge, renderMeta, renderTagList } from '../components/post-card.js';
 import { renderMarkdown } from '../markdown.js';
 import { deletePost, editorUrl, getPost, toggleBookmark, toggleLike } from '../posts.js';
 import { getQueryParam, redirect, routes } from '../router.js';
@@ -101,7 +101,7 @@ function render(post) {
 
   const badges = document.getElementById('post-badges');
   if (post.status === 'DRAFT') badges.append(badge('Taslak — yalnızca sen görüyorsun', 'badge-draft'));
-  if (post.category) badges.append(badge(post.category.name));
+  if (post.category) badges.append(renderCategoryBadge(post.category));
 
   document.getElementById('post-title').textContent = post.title;
   document.getElementById('post-meta').replaceChildren(renderMeta(post));
@@ -110,14 +110,9 @@ function render(post) {
   document.getElementById('post-content').innerHTML = renderMarkdown(post.content);
 
   if (post.tags.length) {
-    const list = document.querySelector('#post-tags .tag-list');
-    for (const tag of post.tags) {
-      const li = document.createElement('li');
-      li.className = 'tag';
-      li.textContent = `#${tag}`;
-      list.append(li);
-    }
-    document.getElementById('post-tags').hidden = false;
+    const footer = document.getElementById('post-tags');
+    footer.replaceChildren(renderTagList(post.tags));
+    footer.hidden = false;
   }
 
   if (post.isOwner) initOwnerActions(post);

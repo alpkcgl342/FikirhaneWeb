@@ -35,13 +35,19 @@
   max-width: 720px;
 }
 
-.topics li {
+.topics a {
+  display: inline-block;
   padding: var(--space-1) var(--space-4);
   border-radius: 999px;
   background: var(--color-primary-soft);
   color: var(--color-primary-hover);
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.topics a:hover {
+  background: #ffe2cf;
+  text-decoration: none;
 }
 
 .latest {

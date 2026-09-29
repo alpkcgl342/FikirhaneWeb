@@ -40,20 +40,31 @@
       </section>
 
       <section class="container" aria-label="Konular">
-        <ul class="topics">
-          <li>Teknoloji</li>
-          <li>Bilim</li>
-          <li>Sanat</li>
-          <li>Kültür</li>
-          <li>Spor</li>
-          <li>Kişisel Gelişim</li>
-          <li>Girişimcilik</li>
-          <li>Gündem</li>
+        <ul class="topics" data-topics>
+          <li><a href="/pages/category.html?slug=teknoloji">Teknoloji</a></li>
+          <li><a href="/pages/category.html?slug=bilim">Bilim</a></li>
+          <li><a href="/pages/category.html?slug=sanat">Sanat</a></li>
+          <li><a href="/pages/category.html?slug=kultur">Kültür</a></li>
+          <li><a href="/pages/category.html?slug=spor">Spor</a></li>
+          <li><a href="/pages/category.html?slug=kisisel-gelisim">Kişisel Gelişim</a></li>
+          <li><a href="/pages/category.html?slug=girisimcilik">Girişimcilik</a></li>
+          <li><a href="/pages/category.html?slug=gundem">Gündem</a></li>
         </ul>
       </section>
 
       <section class="container latest" aria-labelledby="latest-heading">
-        <h2 id="latest-heading">Son yazılar</h2>
+        <h2 id="latest-heading">Akış</h2>
+        <div class="filter-tabs" role="tablist" aria-label="Akış">
+          <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="true" data-feed="yeni">
+            En yeniler
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-feed="populer">
+            Popüler
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-feed="takip" hidden>
+            Takip ettiklerim
+          </button>
+        </div>
         <div id="latest-posts"></div>
       </section>
     </main>

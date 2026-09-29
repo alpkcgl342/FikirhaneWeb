@@ -5,10 +5,15 @@ import { renderPostCard } from './post-card.js';
 
 /**
  * container içine listeyi çizer.
- * params: listPosts parametreleri; cardOptions: renderPostCard seçenekleri;
+ * params: listPosts parametreleri; load(page): özel veri kaynağı (ör. arama) — verilirse params yok sayılır;
+ * onFirstPage(result): ilk sayfa geldiğinde çağrılır; cardOptions: renderPostCard seçenekleri;
  * emptyState: boş listede gösterilecek düğüm.
  */
-export function mountPostList(container, { params = {}, cardOptions = {}, emptyState } = {}) {
+export function mountPostList(
+  container,
+  { params = {}, load, onFirstPage, cardOptions = {}, emptyState } = {},
+) {
+  const fetchPage = load ?? ((page) => listPosts({ ...params, page }));
   let page = 0;
   let loading = false;
 
@@ -31,7 +36,10 @@ export function mountPostList(container, { params = {}, cardOptions = {}, emptyS
     more.disabled = true;
     status.textContent = page === 0 ? 'Yazılar yükleniyor…' : '';
     try {
-      const result = await listPosts({ ...params, page: page + 1 });
+      const result = await fetchPage(page + 1);
+      // Bu arada aynı kaba başka bir liste kurulduysa (ör. sekme değişti) sonuç atılır.
+      if (!list.isConnected) return;
+      if (page === 0) onFirstPage?.(result);
       page = result.page;
       for (const post of result.items) list.append(renderPostCard(post, cardOptions));
       status.textContent = '';

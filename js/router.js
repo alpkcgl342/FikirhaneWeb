@@ -8,6 +8,7 @@ export const routes = {
   register: '/pages/register.html',
   editor: '/pages/editor.html',
   myPosts: '/pages/my-posts.html',
+  search: '/pages/search.html',
 };
 
 /** Giriş yapmamış kullanıcıyı, dönüşte bu sayfaya gelecek şekilde giriş sayfasına yollar. */

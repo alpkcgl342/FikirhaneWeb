@@ -68,6 +68,23 @@ export async function uploadImage(blob, filename) {
   return url;
 }
 
+/** { query, items, page, pageSize, total, totalPages, users } — users yalnızca ilk sayfada dolu */
+export function searchPosts(q, page = 1) {
+  return api(`/search${toQuery({ q, page })}`);
+}
+
+export function categoryUrl(slug) {
+  return `/pages/category.html?slug=${encodeURIComponent(slug)}`;
+}
+
+export function tagUrl(tag) {
+  return `/pages/category.html?tag=${encodeURIComponent(tag)}`;
+}
+
+export function searchUrl(q) {
+  return `/pages/search.html?q=${encodeURIComponent(q)}`;
+}
+
 export function postUrl(slug) {
   return `/pages/post.html?slug=${encodeURIComponent(slug)}`;
 }

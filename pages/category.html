@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Konu — Fikirhane</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/listing.css" />
+    <script type="module" src="/js/pages/category.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container listing-page">
+      <header class="listing-header">
+        <p id="listing-kind" class="listing-kind"></p>
+        <h1 id="listing-title">Yükleniyor…</h1>
+        <p id="listing-description" class="listing-description"></p>
+        <nav id="category-nav" class="category-nav" aria-label="Diğer kategoriler"></nav>
+      </header>
+
+      <div class="filter-tabs" role="tablist" aria-label="Sıralama">
+        <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="true" data-sort="new">
+          En yeniler
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" role="tab" aria-selected="false" data-sort="popular">
+          Popüler
+        </button>
+      </div>
+
+      <div id="listing-posts"></div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 Fikirhane</div>
+    </footer>
+  </body>
+</html>

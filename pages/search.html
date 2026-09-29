@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ara — Fikirhane</title>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/pages/listing.css" />
+    <script type="module" src="/js/pages/search.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <a class="logo" href="/">
+          <img class="logo-mark" src="/assets/logo.svg" alt="" width="28" height="28" />
+          Fikirhane
+        </a>
+        <nav class="site-nav" aria-label="Hesap" data-site-nav></nav>
+      </div>
+    </header>
+
+    <main class="container listing-page">
+      <header class="listing-header">
+        <h1>Ara</h1>
+      </header>
+
+      <form id="search-form" class="search-form" role="search" novalidate>
+        <input
+          id="search-input"
+          name="q"
+          type="search"
+          minlength="2"
+          maxlength="100"
+          placeholder="Yazı başlığı, içerik, yazar veya etiket"
+          aria-label="Arama terimi"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-primary">Ara</button>
+      </form>
+
+      <p id="search-status" class="list-status" role="status"></p>
+
+      <section id="user-results-section" hidden aria-labelledby="user-results-title">
+        <h2 id="user-results-title" class="search-section-title">Kişiler</h2>
+        <ul id="user-results" class="user-results"></ul>
+      </section>
+
+      <section id="post-results-section" hidden aria-labelledby="post-results-title">
+        <h2 id="post-results-title" class="search-section-title">Yazılar</h2>
+        <div id="post-results"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">© 2026 Fikirhane</div>
+    </footer>
+  </body>
+</html>
